@@ -3,6 +3,8 @@ import db from '../lib/db';
 
 const userController = {
     getUser: async(req:Request, res:Response) => {
+        const userID = req.user?.id;
+
         const { rows } = await db.query(`
             SELECT 
                 id,
@@ -10,7 +12,7 @@ const userController = {
                 picture
             FROM users
             WHERE id = $1;
-        `, [req.params.id]);
+        `, [userID]);
         
         const user = rows[0];
         const categories = await db.query(`
@@ -20,8 +22,8 @@ const userController = {
                 subreddits 
             FROM categories
             WHERE user_id = $1
-            ORDER BY id DESC;
-        `, [req.params.id]);
+            ORDER BY id ASC;
+        `, [userID]);
 
         user['categories'] = categories.rows.map(category => {
             return {
