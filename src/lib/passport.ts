@@ -1,9 +1,15 @@
 import passport from 'passport';
 import db from './db';
+import dotenv from 'dotenv';
+
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const GithubStrategy = require('passport-github2').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
 const TwitterStrategy = require('passport-twitter').Strategy;
+
+
+// Not sure why I have to include this when it's already included in app.ts file
+dotenv.config();
 
 passport.serializeUser((user: any, done) => {
   done(null, user.id);
@@ -16,9 +22,9 @@ passport.deserializeUser(async (id, done) => {
 });
 
 passport.use(new GoogleStrategy({
-  clientID: '383288527048-lu80q8n0d1jflckvqkol54qua53t1o1b.apps.googleusercontent.com',
-  clientSecret: 'KVwRYZRY1CQugZZpoTOtfBS7',
-  callbackURL: "http://localhost:5000/api/auth/google/callback"
+  clientID: process.env.GOOGLE_CLIENT,
+  clientSecret: process.env.GOOGLE_SECRET,
+  callbackURL: `${process.env.SERVER}/api/auth/google/callback`
 },
   async (
     accessToken: string,
@@ -60,9 +66,9 @@ passport.use(new GoogleStrategy({
 
 
 passport.use(new GithubStrategy({
-  clientID: "089e70810933eaf9dcea",
-  clientSecret: "1d16ba5307518b10f7f6ec725efc147f09120de8",
-  callbackURL: "http://localhost:5000/api/auth/github/callback"
+  clientID: process.env.GITHUB_CLIENT,
+  clientSecret: process.env.GITHUB_SECRET,
+  callbackURL: `${process.env.SERVER}/api/auth/github/callback`
 },
   async (
     accessToken: string,
@@ -71,8 +77,6 @@ passport.use(new GithubStrategy({
     done: any
   ) => {
     const { id, provider, photos, displayName, username } = profile;
-
-    console.log(id, provider, photos, displayName, username);
 
     const { rows } = await db.query('SELECT * FROM users WHERE oauth_id = $1', [profile.id]);
 
@@ -104,9 +108,9 @@ passport.use(new GithubStrategy({
 ));
 
 passport.use(new FacebookStrategy({
-  clientID: "402486327788817",
-  clientSecret: "fadf36d3f84c0eff7ffc8c14ad7d289d",
-  callbackURL: "http://localhost:5000/api/auth/facebook/callback"
+  clientID: process.env.FACEBOOK_CLIENT,
+  clientSecret: process.env.FACEBOOK_SECRET,
+  callbackURL: `${process.env.SERVER}/api/auth/facebook/callback`
 },
   async (
     accessToken: string,
@@ -114,7 +118,6 @@ passport.use(new FacebookStrategy({
     profile: any,
     done: any
   ) => {
-    console.log(profile);
     const { id, displayName } = profile;
 
     const { rows } = await db.query('SELECT * FROM users WHERE oauth_id = $1', [profile.id]);
@@ -148,9 +151,9 @@ passport.use(new FacebookStrategy({
 
 
 passport.use(new TwitterStrategy({
-  consumerKey: "YnJoDv65FLw4FjGKkMG5wGw4B",
-  consumerSecret: "AkQkFRYvjMk2CZmgM8zJoV3lEjWy24fz9Ba3QhsP5FZVCQoOJx",
-  callbackURL: "http://localhost:5000/api/auth/twitter/callback"
+  consumerKey: process.env.TWITTER_CLIENT,
+  consumerSecret: process.env.TWITTER_SECRET,
+  callbackURL: `${process.env.SERVER}/api/auth/twitter/callback`
 },
   async (
     accessToken: string,
@@ -158,9 +161,7 @@ passport.use(new TwitterStrategy({
     profile: any,
     done: any
   ) => {
-    console.log(profile);
     const { id, provider, photos, displayName, username } = profile;
-
     const { rows } = await db.query('SELECT * FROM users WHERE oauth_id = $1', [profile.id]);
 
     // User not found - Create user

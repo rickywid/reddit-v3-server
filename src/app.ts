@@ -43,7 +43,7 @@ app.use(session({
           database: 'reddit-v3'
         })
       }),
-    secret: 'asdfdsaf',
+    secret: process.env.SESSION_SECRET!,
     cookie: { 
       secure: false
     }
@@ -70,8 +70,6 @@ app.use('/api/user', userRouter);
 app.use('/api/category', categoryRouter);
 app.use('/api/subreddit', subredditRouter);
 
-
-
 app.listen(process.env.PORT || 5000, () => { 
-    console.log(`App listening at ${process.env.DOMAIN}:${process.env.PORT}`)
+    console.log(`App listening at ${process.env.SERVER}:${process.env.PORT}`)
 });

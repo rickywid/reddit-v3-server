@@ -6,8 +6,7 @@ const router = express.Router();
 
 router.get('/', passport.authenticate('twitter'), function (req:Request, res:Response, next:NextFunction) {
     if(req.user) {
-        // res.redirect(`${process.env.CLIENT}/redirect?id=${req.user.id}`);
-        res.redirect('http://localhost:3000');
+        res.redirect(process.env.CLIENT!);
     }
     
 });
