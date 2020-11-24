@@ -1,9 +1,11 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 import express from 'express';
 import session from 'express-session';
 import { Pool } from 'pg';
 import connectPgSimple from 'connect-pg-simple';
 import cors from 'cors';
-import dotenv from 'dotenv';
 import passport from 'passport';
 import googleAuthRouter from './routes/auth/google/google-auth';
 import googleAuthCallbackRouter from './routes/auth/google/callback';
@@ -18,7 +20,6 @@ import userRouter from './routes/user';
 import categoryRouter from './routes/category';
 import subredditRouter from './routes/subreddit';
 
-dotenv.config();
 
 const pgSession = connectPgSimple(session);
 const app = express();

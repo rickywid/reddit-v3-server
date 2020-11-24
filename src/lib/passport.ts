@@ -1,15 +1,10 @@
 import passport from 'passport';
 import db from './db';
-import dotenv from 'dotenv';
 
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const GithubStrategy = require('passport-github2').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
 const TwitterStrategy = require('passport-twitter').Strategy;
-
-
-// Not sure why I have to include this when it's already included in app.ts file
-dotenv.config();
 
 passport.serializeUser((user: any, done) => {
   done(null, user.id);
