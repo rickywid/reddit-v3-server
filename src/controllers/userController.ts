@@ -8,6 +8,7 @@ const userController = {
         const { rows } = await db.query(`
             SELECT 
                 id,
+                display_name,
                 username,
                 picture
             FROM users

@@ -7,6 +7,12 @@ import dotenv from 'dotenv';
 import passport from 'passport';
 import googleAuthRouter from './routes/auth/google/google-auth';
 import googleAuthCallbackRouter from './routes/auth/google/callback';
+import githubAuthRouter from './routes/auth/github/github-auth';
+import githubAuthCallbackRouter from './routes/auth/github/callback';
+import facebookAuthRouter from './routes/auth/facebook/facebook-auth';
+import facebookAuthCallbackRouter from './routes/auth/facebook/callback';
+import twitterAuthRouter from './routes/auth/twitter/twitter-auth';
+import twitterAuthCallbackRouter from './routes/auth/twitter/callback';
 import logoutRouter from './routes/auth/logout';
 import userRouter from './routes/user';
 import categoryRouter from './routes/category';
@@ -50,7 +56,15 @@ app.use(passport.session());
 /******************** */
 app.use('/api/auth/google', googleAuthRouter);
 app.use('/api/auth/google/callback', googleAuthCallbackRouter);
+app.use('/api/auth/github', githubAuthRouter);
+app.use('/api/auth/github/callback', githubAuthCallbackRouter);
+app.use('/api/auth/facebook', facebookAuthRouter);
+app.use('/api/auth/facebook/callback', facebookAuthCallbackRouter);
+app.use('/api/auth/twitter', twitterAuthRouter);
+app.use('/api/auth/twitter/callback', twitterAuthCallbackRouter);
+
 app.use('/api/auth/logout', logoutRouter);
+
 app.use('/api/user', userRouter);
 app.use('/api/category', categoryRouter);
 app.use('/api/subreddit', subredditRouter);
