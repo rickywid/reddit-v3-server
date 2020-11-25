@@ -40,7 +40,7 @@ app.use(session({
         pool : new Pool({
           user: process.env.DB_USER, 
           password: process.env.DB_PASS,
-          host: '', 
+          host: process.env.DB_HOSTNAME, 
           database: process.env.DB_NAME
         })
       }),
