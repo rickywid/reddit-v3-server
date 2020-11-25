@@ -48,8 +48,7 @@ app.use(session({
       }),
     secret: process.env.SESSION_SECRET!,
     cookie: { 
-      secure: true,
-      sameSite: 'none'
+      secure: false
     }
 }));
 
