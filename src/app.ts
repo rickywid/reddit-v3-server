@@ -30,7 +30,8 @@ app.use(express.json());
 app.use(cors({
     origin: [
       'http://localhost:3000',
-      'https://redditu.herokuapp.com'
+      'https://redditu.herokuapp.com',
+      'https://redditu-api.herokuapp.com'
     ],
     credentials: true,
 }));
