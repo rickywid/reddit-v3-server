@@ -16,6 +16,12 @@ passport.deserializeUser(async (id, done) => {
   done(null, user);
 });
 
+
+
+
+/**
+ * GOOGLE STRATEGY
+ */
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT,
   clientSecret: process.env.GOOGLE_SECRET,
@@ -60,6 +66,14 @@ passport.use(new GoogleStrategy({
 ));
 
 
+
+
+
+
+
+/**
+ * GITHUB STRATEGY
+ */
 passport.use(new GithubStrategy({
   clientID: process.env.GITHUB_CLIENT,
   clientSecret: process.env.GITHUB_SECRET,
@@ -102,6 +116,13 @@ passport.use(new GithubStrategy({
   }
 ));
 
+
+
+
+
+/**
+ * FACEBOOK STRATEGY
+ */
 passport.use(new FacebookStrategy({
   clientID: process.env.FACEBOOK_CLIENT,
   clientSecret: process.env.FACEBOOK_SECRET,
@@ -145,6 +166,14 @@ passport.use(new FacebookStrategy({
 ));
 
 
+
+
+
+
+
+/**
+ * TWITTER STRATEGY
+ */
 passport.use(new TwitterStrategy({
   consumerKey: process.env.TWITTER_CLIENT,
   consumerSecret: process.env.TWITTER_SECRET,

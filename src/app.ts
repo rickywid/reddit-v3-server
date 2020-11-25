@@ -41,7 +41,7 @@ app.use(session({
           user: process.env.DB_USER, 
           password: process.env.DB_PASS,
           host: '', 
-          database: 'reddit-v3'
+          database: process.env.DB_NAME
         })
       }),
     secret: process.env.SESSION_SECRET!,
