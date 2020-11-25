@@ -31,7 +31,8 @@ app.use(cors({
     origin: [
       'http://localhost:3000',
       'https://redditu.herokuapp.com',
-      'https://redditu-api.herokuapp.com'
+      'https://redditu-api.herokuapp.com',
+      'http://redditu-api.herokuapp.com'
     ],
     credentials: true,
 }));
@@ -47,7 +48,8 @@ app.use(session({
       }),
     secret: process.env.SESSION_SECRET!,
     cookie: { 
-      secure: false
+      secure: true,
+      sameSite: 'none'
     }
 }));
 
