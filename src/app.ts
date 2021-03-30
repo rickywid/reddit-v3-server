@@ -28,28 +28,31 @@ const app = express();
 app.use(express.json());
 
 app.use(cors({
-    origin: [
-      'http://localhost:3000',
-      'https://redditu.herokuapp.com',
-      'https://redditu-api.herokuapp.com',
-      'http://redditu-api.herokuapp.com'
-    ],
-    credentials: true,
+  origin: [
+    'http://localhost:3000',
+    'https://redditu.herokuapp.com',
+    'https://redditu-api.herokuapp.com',
+    'http://redditu-api.herokuapp.com'
+  ],
+  credentials: true,
 }));
 
 app.use(session({
-    store: new pgSession({
-        pool : new Pool({
-          user: process.env.DB_USER, 
-          password: process.env.DB_PASS,
-          host: process.env.DB_HOSTNAME, 
-          database: process.env.DB_NAME
-        })
-      }),
-    secret: process.env.SESSION_SECRET!,
-    cookie: { 
-      secure: false
-    }
+  store: new pgSession({
+    pool: new Pool({
+      user: process.env.DB_USER,
+      password: process.env.DB_PASS,
+      host: process.env.DB_HOSTNAME,
+      database: process.env.DB_NAME,
+      ssl: {
+        rejectUnauthorized: false
+      }
+    })
+  }),
+  secret: process.env.SESSION_SECRET!,
+  cookie: {
+    secure: false
+  }
 }));
 
 app.use(passport.initialize());
@@ -73,6 +76,6 @@ app.use('/api/user', userRouter);
 app.use('/api/category', categoryRouter);
 app.use('/api/subreddit', subredditRouter);
 
-app.listen(process.env.PORT || 5000, () => { 
-    console.log(`App listening at ${process.env.SERVER}:${process.env.PORT}`)
+app.listen(process.env.PORT || 5000, () => {
+  console.log(`App listening at ${process.env.SERVER}:${process.env.PORT}`)
 });
